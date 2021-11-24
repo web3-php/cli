@@ -12,7 +12,7 @@ use Symfony\Component\Process\Process;
 use Web3\Cli\Contracts\Command;
 use Web3\Cli\Contracts\Watcher;
 use Web3\Cli\Guards\EnsureNpxIsGloballyAvailable;
-use Web3\Cli\Repositories\Servers;
+use Web3\Cli\Guards\KillsExistingServers;
 use Web3\Cli\Support\DB;
 use Web3\Cli\Support\View;
 use Web3\Cli\Watchers;
@@ -48,6 +48,7 @@ final class Serve implements Command
     {
         return [
             EnsureNpxIsGloballyAvailable::class,
+            KillsExistingServers::class,
         ];
     }
 
@@ -56,21 +57,12 @@ final class Serve implements Command
      */
     public function run(InputInterface $input, ConsoleOutputInterface $output): void
     {
-        Servers::ensureNotRunning();
-
-        $process = new Process([
-            'npm',
-            'exec',
-            '--',
-            'ganache-cli',
+        $process = Process::fromShellCommandline(sprintf(
+            'npm exec -- ganache-cli %s --host %s --port %s',
             $input->getOption('accounts'),
-            '--host',
             $input->getOption('host'),
-            '--port',
             $input->getOption('port'),
-        ]);
-
-        $process->setTimeout(0);
+        ))->setTimeout(0);
 
         $process->start();
 
@@ -80,20 +72,11 @@ final class Serve implements Command
             '<span>Listening on </span> <strong class="text-yellow"> %s:%s</strong>', $input->getOption('host'), $input->getOption('port')
         ));
 
-        $this->wait(
-            $process,
-            $output,
-            sprintf(
-                'http://%s:%s',
-                $input->getOption('host'),
-                $input->getOption('port')
-            )
-        );
-    }
-
-    public function wait(Process $process, ConsoleOutputInterface $output, string $url): void
-    {
-        $web3 = new Web3($url);
+        $web3 = new Web3(sprintf(
+            'http://%s:%s',
+            $input->getOption('host'),
+            $input->getOption('port')
+        ));
 
         $processors = array_map(
             fn ($class) => new $class($web3, $output),
