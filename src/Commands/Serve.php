@@ -11,6 +11,7 @@ use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Process\Process;
 use Web3\Cli\Contracts\Command;
 use Web3\Cli\Contracts\Watcher;
+use Web3\Cli\Guards\EnsureNpxIsGloballyAvailable;
 use Web3\Cli\Repositories\Servers;
 use Web3\Cli\Support\DB;
 use Web3\Cli\Support\View;
@@ -38,6 +39,16 @@ final class Serve implements Command
         $command->addOption('accounts', null, InputOption::VALUE_REQUIRED, 'Number of accounts to generate at startup', '5');
         $command->addOption('host', null, InputOption::VALUE_REQUIRED, 'Hostname to listen on', '127.0.0.1');
         $command->addOption('port', null, InputOption::VALUE_REQUIRED, 'Port number to listen on', '8545');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function guards(): array
+    {
+        return [
+            EnsureNpxIsGloballyAvailable::class,
+        ];
     }
 
     /**

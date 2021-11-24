@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Web3\Cli;
+namespace Web3\Cli\Guards;
 
 use Symfony\Component\Process\Process;
 use Web3\Cli\Contracts\Guard;
+use Web3\Cli\Exceptions\FriendlyConsoleException;
 
 /**
  * @internal
@@ -17,8 +18,10 @@ final class EnsureNpxIsGloballyAvailable implements Guard
      */
     public function execute(): void
     {
-        $result = Process::fromShellCommandline('npx --version')->wait();
+        $result = Process::fromShellCommandline('npm --version')->mustRun();
 
-        // @todo...
+        if ($result->isSuccessful() === false) {
+            throw new FriendlyConsoleException('Missing requirement', 'The Web3 CLI currently requires npm version ^8.0.');
+        }
     }
 }

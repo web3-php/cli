@@ -13,10 +13,26 @@ use Symfony\Component\Console\Exception\ExceptionInterface;
 final class FriendlyConsoleException extends Exception implements ExceptionInterface
 {
     /**
-     * Creates a new FriendlyConsoleException with the given message.
+     * Creates a new FriendlyConsoleException instance.
      */
-    public static function withMessage(string $message): self
+    public function __construct(private string $title, private string $description)
     {
-        return new self($message, 1);
+        parent::__construct(sprintf('%s: %s', $title, $description), 1);
+    }
+
+    /**
+     * Returns the exception title.
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    /**
+     * Returns the exception description.
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
     }
 }

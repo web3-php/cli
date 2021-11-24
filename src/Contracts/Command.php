@@ -19,6 +19,13 @@ interface Command
     public function configure(SymfonyCommand $command): void;
 
     /**
+     * Returns the Command Guards.
+     *
+     * @return array<int, class-string<Guard>>
+     */
+    public function guards(): array;
+
+    /**
      * Runs the Command.
      */
     public function run(InputInterface $input, ConsoleOutputInterface $output): void;

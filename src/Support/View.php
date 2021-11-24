@@ -43,6 +43,18 @@ final class View
     }
 
     /**
+     * Renders the given error label.
+     */
+    public static function error(string $title, string $description): void
+    {
+        self::render('alert', [
+            'title'       => strtoupper($title),
+            'bg'          => 'red',
+            'description' => $description,
+        ]);
+    }
+
+    /**
      * Returns the terminal width.
      */
     public static function width(): int

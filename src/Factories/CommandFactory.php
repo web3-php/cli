@@ -6,6 +6,11 @@ namespace Web3\Cli\Factories;
 
 use ReflectionClass;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Web3\Cli\Exceptions\FriendlyConsoleException;
+use Web3\Cli\Kernel;
+use Web3\Cli\Support\View;
 
 /**
  * @internal
@@ -34,7 +39,19 @@ final class CommandFactory
 
             $command->configure($instance);
 
-            return $instance->setCode(fn () => $command->run(...func_get_args()));
+            return $instance->setCode(function (InputInterface $input, OutputInterface $output) use ($command) {
+                foreach ($command->guards() as $guard) {
+                    try {
+                        (new $guard())->execute();
+                    } catch (FriendlyConsoleException $e) {
+                        View::error($e->getTitle(), $e->getDescription());
+
+                        Kernel::shutdown();
+                    }
+                }
+
+                $command->run($input, $output);
+            });
         }, $commands);
     }
 }
