@@ -59,9 +59,10 @@ final class Serve implements Command
         Servers::ensureNotRunning();
 
         $process = new Process([
-            'npx',
+            'npm',
+            'exec',
+            '--',
             'ganache-cli',
-            '--accounts',
             $input->getOption('accounts'),
             '--host',
             $input->getOption('host'),
