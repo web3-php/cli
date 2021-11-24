@@ -1,0 +1,38 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use Web3\Cli\Kernel;
+use Web3\Cli\Commands\Serve;
+use Web3\Cli\Factories\CommandFactory;
+
+(static function () {
+    require file_exists(__DIR__ . '/../vendor/autoload.php')
+        ? __DIR__ . '/../vendor/autoload.php'
+        : __DIR__ . '/../../../../vendor/autoload.php';
+
+    /**
+     * Creates a new Application instance.
+     */
+    $application = Kernel::boot();
+
+    /**
+     * Builds the Symfony Commands instances, and them to the Application instance.
+     */
+    $commands = CommandFactory::make([
+        Serve::class,
+    ]);
+
+    $application->addCommands($commands);
+
+    /*
+     * Defines the default Command, and runs the Application.
+     */
+    $application->setDefaultCommand('serve')->run();
+
+    /**
+     * Terminates the Kernel instance.
+     */
+    Kernel::terminate();
+})();
