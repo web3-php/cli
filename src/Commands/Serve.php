@@ -62,7 +62,7 @@ final class Serve implements Command
         $port     = $this->getOption($input, 'port');
 
         $process = Process::fromShellCommandline(sprintf(
-            'npm exec -- ganache-cli %s --host %s --port %s', $accounts, $host, $port
+            'npm exec -- ganache-cli --accounts=%s --host %s --port %s', $accounts, $host, $port
         ))->setTimeout(0);
 
         $process->start();

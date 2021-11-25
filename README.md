@@ -1,42 +1,60 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/nunomaduro/skeleton-php/master/docs/example.png" height="300" alt="Skeleton Php">
+    <img src="https://raw.githubusercontent.com/web3-php/art/master/cli-without-bg.png" width="600" alt="Web3 PHP">
     <p align="center">
-        <a href="https://github.com/nunomaduro/skeleton-php/actions"><img alt="GitHub Workflow Status (master)" src="https://img.shields.io/github/workflow/status/nunomaduro/skeleton-php/Tests/master"></a>
-        <a href="https://packagist.org/packages/nunomaduro/skeleton-php"><img alt="Total Downloads" src="https://img.shields.io/packagist/dt/nunomaduro/skeleton-php"></a>
-        <a href="https://packagist.org/packages/nunomaduro/skeleton-php"><img alt="Latest Version" src="https://img.shields.io/packagist/v/nunomaduro/skeleton-php"></a>
-        <a href="https://packagist.org/packages/nunomaduro/skeleton-php"><img alt="License" src="https://img.shields.io/packagist/l/nunomaduro/skeleton-php"></a>
+        <a href="https://github.com/web3-php/cli/actions"><img alt="GitHub Workflow Status (master)" src="https://img.shields.io/github/workflow/status/web3-php/web/Tests/master"></a>
+        <a href="https://packagist.org/packages/web3-php/cli"><img alt="Total Downloads" src="https://img.shields.io/packagist/dt/web3-php/cli"></a>
+        <a href="https://packagist.org/packages/web3-php/cli"><img alt="Latest Version" src="https://img.shields.io/packagist/v/web3-php/cli"></a>
+        <a href="https://packagist.org/packages/web3-php/cli"><img alt="License" src="https://img.shields.io/packagist/l/web3-php/cli"></a>
     </p>
 </p>
 
 ------
-This package provides a wonderful **PHP Skeleton** to start building your next package idea.
+**Web3 PHP** is a supercharged PHP API client that allows you to interact with a generic Ethereum RPC.
+
+> This project is a work-in-progress. Code and documentation are currently under development and are subject to change.
+
+## Get Started
 
 > **Requires [PHP 8.0+](https://php.net/releases/)**
 
-⚡️ Create your package using [Composer](https://getcomposer.org):
+First, install Web3 via the [Composer](https://getcomposer.org/) package manager:
 
 ```bash
-composer create-project nunomaduro/skeleton-php --prefer-source PackageName
+composer global require web3-php/cli
 ```
 
-🧹 Keep a modern codebase with **PHP CS Fixer**:
+Then, start the local blockchain server:
+
+```
+web3
+```
+
+## Options
+
+### `accounts`
+
+The `accounts` option allows to specify the number of accounts.
+
 ```bash
-composer lint
+web3 --accounts=5 # Default: 10
 ```
 
-⚗️ Run static analysis using **PHPStan**:
+### `host`
+
+The `host` option allows to specify the hostname to listen on.
+
 ```bash
-composer test:types
+web3 --host=127.0.0.2 # Default: 127.0.0.1
 ```
 
-✅ Run unit tests using **PEST**
+### `port`
+
+The `port` option allows to specify the port number to listen on.
+
 ```bash
-composer test:unit
+web3 --port=8550 # Default: 8545
 ```
 
-🚀 Run the entire test suite:
-```bash
-composer test
-```
+---
 
-**Skeleton PHP** was created by **[Nuno Maduro](https://twitter.com/enunomaduro)** under the **[MIT license](https://opensource.org/licenses/MIT)**.
+Web3 PHP CLI is an open-sourced software licensed under the **[MIT license](https://opensource.org/licenses/MIT)**.
