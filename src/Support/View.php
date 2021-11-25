@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Web3\Cli\Support;
 
 use function Termwind\render;
-use function Termwind\terminal;
 
 /**
  * @internal
@@ -52,13 +51,5 @@ final class View
             'bg'          => 'red',
             'description' => $description,
         ]);
-    }
-
-    /**
-     * Returns the terminal width.
-     */
-    public static function width(): int
-    {
-        return max(min(terminal()->width() - 500, 0), 50);
     }
 }

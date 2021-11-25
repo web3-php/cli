@@ -44,6 +44,16 @@ final class DB
     }
 
     /**
+     * Flushes the database.
+     */
+    public static function flush(): void
+    {
+        if (file_exists(self::getLocation())) {
+            @unlink(self::getLocation());
+        }
+    }
+
+    /**
      * Gets the Database location.
      */
     private static function getLocation(): string

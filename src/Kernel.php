@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Web3\Cli;
 
+use Spatie\Once\Cache;
 use Symfony\Component\Console\Application;
 use Web3\Cli\Support\DB;
 
@@ -47,6 +48,10 @@ final class Kernel
     public static function terminate(): void
     {
         self::$application = null;
+
+        DB::flush();
+
+        Cache::getInstance()->flush();
     }
 
     /**

@@ -9,7 +9,6 @@ use Symfony\Component\Console\Output\ConsoleSectionOutput;
 use function Termwind\renderUsing;
 use Web3\Cli\Contracts\Watcher;
 use Web3\Cli\Support\View;
-use Web3\ValueObjects\Wei;
 use Web3\Web3;
 
 /**
@@ -22,11 +21,6 @@ final class Accounts implements Watcher
      */
     private ConsoleSectionOutput $section;
 
-    /*
-     * The Gas Price.
-     */
-    private ?Wei $gasPrice = null;
-
     /**
      * Creates a Watcher instance.
      */
@@ -35,6 +29,9 @@ final class Accounts implements Watcher
         $this->section = $output->section();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function watch(): void
     {
         renderUsing($this->section);
@@ -45,13 +42,12 @@ final class Accounts implements Watcher
             $accounts[$address] = $this->web3->eth()->getBalance($address);
         }
 
-        $this->gasPrice = $this->gasPrice ?: $this->web3->eth()->gasPrice();
-
         $this->section->clear();
 
         View::render('accounts', [
-            'accounts' => $accounts,
-            'gasPrice' => $this->gasPrice,
+            'accounts'    => $accounts,
+            'gasPrice'    => $this->web3->eth()->gasPrice()->toWei(),
+            'blockNumber' => '0', // @todo
         ]);
     }
 }

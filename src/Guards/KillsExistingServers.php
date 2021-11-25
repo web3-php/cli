@@ -17,7 +17,7 @@ final class KillsExistingServers implements Guard
      */
     public function execute(): void
     {
-        if (is_string($processId = DB::get('server'))) {
+        if (!is_string($processId = DB::get('server'))) {
             return;
         }
 

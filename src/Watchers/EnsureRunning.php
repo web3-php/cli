@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Web3\Cli\Watchers;
 
-use Symfony\Component\Console\Output\ConsoleOutputInterface;
-use function Termwind\renderUsing;
 use Web3\Cli\Contracts\Watcher;
-use Web3\Cli\Contracts\WatcherButOnlyOnce;
 use Web3\Exceptions\ErrorException;
 use Web3\Exceptions\TransporterException;
 use Web3\Web3;
@@ -15,17 +12,12 @@ use Web3\Web3;
 /**
  * @internal
  */
-final class EnsureRunning implements WatcherButOnlyOnce
+final class EnsureRunning implements Watcher
 {
-    /**
-     * If the Server is running.
-     */
-    private $running = false;
-
     /**
      * Creates a Watcher instance.
      */
-    public function __construct(private Web3 $web3, private ConsoleOutputInterface $output)
+    public function __construct(private Web3 $web3)
     {
         // ..
     }
@@ -35,20 +27,14 @@ final class EnsureRunning implements WatcherButOnlyOnce
      */
     public function watch(): void
     {
-        if ($this->running) {
-            return;
-        }
+        once(function () {
+            try {
+                $this->web3->clientVersion();
+            } catch (TransporterException|ErrorException) {
+                sleep(1);
 
-        renderUsing($this->output);
-
-        try {
-            $this->web3->clientVersion();
-
-            $this->running = true;
-        } catch (TransporterException|ErrorException) {
-            sleep(1);
-
-            $this->watch();
-        }
+                $this->watch();
+            }
+        });
     }
 }

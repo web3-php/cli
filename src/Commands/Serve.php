@@ -57,11 +57,12 @@ final class Serve implements Command
      */
     public function run(InputInterface $input, ConsoleOutputInterface $output): void
     {
+        $accounts = $this->getOption($input, 'accounts');
+        $host     = $this->getOption($input, 'host');
+        $port     = $this->getOption($input, 'port');
+
         $process = Process::fromShellCommandline(sprintf(
-            'npm exec -- ganache-cli %s --host %s --port %s',
-            $input->getOption('accounts'),
-            $input->getOption('host'),
-            $input->getOption('port'),
+            'npm exec -- ganache-cli %s --host %s --port %s', $accounts, $host, $port
         ))->setTimeout(0);
 
         $process->start();
@@ -69,14 +70,12 @@ final class Serve implements Command
         DB::set('server', (string) $process->getPid());
 
         View::info('http', sprintf(
-            '<span>Listening on </span> <strong class="text-yellow"> %s:%s</strong>', $input->getOption('host'), $input->getOption('port')
+            '<span>Listening on </span> <strong class="text-yellow"> %s:%s</strong>',
+            $host,
+            $port,
         ));
 
-        $web3 = new Web3(sprintf(
-            'http://%s:%s',
-            $input->getOption('host'),
-            $input->getOption('port')
-        ));
+        $web3 = new Web3(sprintf('http://%s:%s', $host, $port));
 
         $processors = array_map(
             fn ($class) => new $class($web3, $output),
@@ -90,5 +89,17 @@ final class Serve implements Command
 
             sleep(1);
         }
+    }
+
+    /**
+     * Returns the given option value.
+     */
+    private function getOption(InputInterface $input, string $name): string
+    {
+        $value = $input->getOption($name);
+
+        assert(is_string($value));
+
+        return $value;
     }
 }
