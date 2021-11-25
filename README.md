@@ -9,7 +9,7 @@
 </p>
 
 ------
-**Web3 PHP** is a supercharged PHP API client that allows you to interact with a generic Ethereum RPC.
+**Web3 PHP CLI** is a blazing fast blockchain server for local development.
 
 > This project is a work-in-progress. Code and documentation are currently under development and are subject to change.
 
