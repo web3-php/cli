@@ -20,6 +20,7 @@
 First, install Web3 via the [Composer](https://getcomposer.org/) package manager:
 
 ```bash
+composer global config minimum-stability dev
 composer global require web3-php/cli
 ```
 
