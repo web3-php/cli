@@ -1,7 +1,7 @@
 {
     "name": "web3-php/cli",
-    "description": "A blazing fast local blockchain.",
-    "keywords": ["php", "skeleton", "package"],
+    "description": "Web3 PHP CLI is a blazing fast blockchain server for local development.",
+    "keywords": ["php", "web3", "ethereum", "json-rpc", "server", "local"],
     "license": "MIT",
     "authors": [
         {
@@ -51,5 +51,8 @@
             "@test:types",
             "@test:unit"
         ]
-    }
+    },
+    "bin": [
+        "./bin/web3"
+    ]
 }
