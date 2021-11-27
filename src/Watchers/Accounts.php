@@ -46,7 +46,7 @@ final class Accounts implements Watcher
 
         View::render('accounts', [
             'accounts'    => $accounts,
-            'gasPrice'    => $this->web3->eth()->gasPrice()->toWei(),
+            'gasPrice'    => $this->web3->eth()->gasPrice(),
             'blockNumber' => '0', // @todo
         ]);
     }

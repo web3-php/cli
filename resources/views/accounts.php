@@ -2,7 +2,7 @@
     <div class="text-gray-100">
         Block: <?php echo $blockNumber; ?>
         <span class="ml-2 text-gray-50">〉</span>
-        Gas price: <?php echo $gasPrice; ?>
+        Gas price: <?php echo $gasPrice->toEth(); ?> ETH
     </div>
 
     <div class="mt-1">
