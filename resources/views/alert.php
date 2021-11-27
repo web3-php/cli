@@ -1,6 +1,6 @@
-<div class="ml-2 mt-1 mb-1">
-    <div class="pl-1 pr-1 bg-<?php echo $bg ?>">
+<div class="ml-2 my-1">
+    <span class="px-1 bg-<?php echo $bg ?>">
         <?php echo strtoupper($title) ?>
-    </div>
-    <strong class="ml-1"><?php echo $description ?></strong>
+    </span>
+    <b class="ml-1"><?php echo $description ?></b>
 </div>
