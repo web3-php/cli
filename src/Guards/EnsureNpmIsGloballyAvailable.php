@@ -11,7 +11,7 @@ use Web3\Cli\Exceptions\FriendlyConsoleException;
 /**
  * @internal
  */
-final class EnsureNpxIsGloballyAvailable implements Guard
+final class EnsureNpmIsGloballyAvailable implements Guard
 {
     /**
      * {@inheritDoc}

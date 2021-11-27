@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Process\Process;
 use Web3\Cli\Contracts\Command;
 use Web3\Cli\Contracts\Watcher;
-use Web3\Cli\Guards\EnsureNpxIsGloballyAvailable;
+use Web3\Cli\Guards\EnsureNpmIsGloballyAvailable;
 use Web3\Cli\Guards\KillsExistingServers;
 use Web3\Cli\Support\DB;
 use Web3\Cli\Support\View;
@@ -47,7 +47,7 @@ final class Serve implements Command
     public function guards(): array
     {
         return [
-            EnsureNpxIsGloballyAvailable::class,
+            EnsureNpmIsGloballyAvailable::class,
             KillsExistingServers::class,
         ];
     }
