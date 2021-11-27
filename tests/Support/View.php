@@ -23,17 +23,17 @@ it('renders views', function () {
         'description' => 'My description',
     ]);
 
-    expect($this->output->fetch())->toContain("MY TITLE  \e[1mMy description\e[0m");
+    expect($this->output->fetch())->toContain('MY TITLE  My description');
 });
 
 it('renders info labels', function () {
     View::info('My title', 'My description');
 
-    expect($this->output->fetch())->toContain("MY TITLE  \e[1mMy description\e[0m");
+    expect($this->output->fetch())->toContain('MY TITLE  My description');
 });
 
 it('renders error labels', function () {
     View::error('My title', 'My description');
 
-    expect($this->output->fetch())->toContain("MY TITLE  \e[1mMy description\e[0m");
+    expect($this->output->fetch())->toContain('MY TITLE  My description');
 });

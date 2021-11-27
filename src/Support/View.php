@@ -14,7 +14,7 @@ final class View
     /**
      * Renders the given View name.
      *
-     * @param array<string, array<array-key|mixed>|string> $variables
+     * @param array<string, array<array-key|mixed>|string|\Stringable> $variables
      */
     public static function render(string $name, array $variables = []): void
     {
