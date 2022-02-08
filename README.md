@@ -38,7 +38,7 @@ web3
 The `accounts` option allows to specify the number of accounts.
 
 ```bash
-web3 --accounts=5 # Default: 10
+web3 --accounts=5 # Default: 5
 ```
 
 ### `host`
